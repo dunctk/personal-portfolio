@@ -1,0 +1,59 @@
+name: Publish Django Static Site
+
+on:
+  push:
+    branches: [ main ]  
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.11.6' 
+
+    - name: Cache pip dependencies
+      uses: actions/cache@v3
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
+
+    - name : Install dependencies 
+      run : | 
+         python -m pip install --upgrade pip 
+         pip install virtualenv 
+         python -m virtualenv venv 
+         source venv/bin/activate 
+         pip install -r requirements.txt 
+
+    - name : Tailwind build
+      run : |  
+          source venv/bin/activate 
+          ./manage.py tailwind install     
+          ./manage.py tailwind build  
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+    
+    - name : Collect static files 
+      run : |  
+          source venv/bin/activate  
+          ./manage.py collectstatic --noinput  
+      env:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
+    - name : Distill publish static site   
+      env :
+        AZURE_STORAGE_CONNECTION_STRING : ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}  
+        AZURE_STORAGE_PUBLIC_URL : ${{ secrets.AZURE_STORAGE_PUBLIC_URL }}
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+
+      run : |
+          source venv/bin/activate  
+          ./manage.py distill-publish --force -v 3 --traceback
+        

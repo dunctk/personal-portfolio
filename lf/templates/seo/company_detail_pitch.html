@@ -1,0 +1,29 @@
+{% extends "seo/company_detail.html" %}
+
+{% load humanize %}
+
+{% block title %}
+{{company.name}} SEO Strategy
+{% endblock %}
+
+{% block header %}
+<h1 class="font-display font-bold uppercase text-[2.75rem] md:text-7xl lg:text-[4rem] xl:text-[5.75rem] font-heading max-w-4xl mx-auto text-center">
+	<a href="{% url 'company-detail' company.slug %}">{{company.name}}</a> SEO Strategy
+</h1>
+<p>Ideas to grow your organic marketing</p>
+
+{% endblock %}
+
+
+
+{% block pitch_content %}
+{% if company.pitch_video %}
+<div class="md:max-w-4xl mx-auto md:px-12">
+	<div class="aspect-w-16 aspect-h-9">
+		<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{company.pitch_youtube_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+	</div>
+</div>
+{% endif %}
+
+{% endblock %}
+

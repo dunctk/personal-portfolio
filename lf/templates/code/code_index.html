@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Duncan Trevithick Web Development
+{% endblock %}
+
+{% block header %}
+<h1 class="font-display font-bold uppercase text-[2.75rem] md:text-7xl lg:text-[4rem] xl:text-[5.75rem] font-heading max-w-4xl mx-auto text-center">
+	Code
+</h1>
+{% endblock %}
+
+{% block content %}
+
+
+{{ project.title }}
+<section class="relative mx-auto space-y-8">
+	
+	
+	<div class="grid grid-cols-2 gap-6 mb-12">
+	{% for item in projects %}
+	
+		<div class="space-y-4 border rounded p-6">
+			<h3 class="text-lg">{{ item.title }}</h3>
+			{% if item.description %}
+			<p>{{item.description}}</p>
+			{% endif %}
+			{% if item.youtube_id %}
+			<div class="aspect-w-16 aspect-h-9">
+				<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{item.youtube_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+			</div>
+			{% endif %}
+			{% if item.client %}
+			{% if item.client.is_published %}
+			<p class="bg-slate-200 p-2 rounded text-slate-500">Client: <a href="{% url 'company-detail' item.client.slug %}" class="border-b border-violet-300">{{item.client.name}}</a></p>
+			{% else %}
+			<p class="bg-slate-200 p-2 rounded text-slate-500">Client: {{item.client.name}}</p>
+			{% endif %}
+			{% endif %}
+			<p><a href="{{item.live_url}}" target="_blank" rel="nofollow" class="border-b border-violet-300">Live</a></p>
+		</div>
+	
+	{% endfor %}
+	</div>
+
+	</div>
+	
+</section>
+
+
+{% endblock %}
+

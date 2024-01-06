@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+	font-family: 'ClashDisplay';
+	src: url('/static/fonts/ClashDisplay-Variable.woff') format('woff2'),
+	     url('/static/fonts/ClashDisplay-Variable.woff2') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}

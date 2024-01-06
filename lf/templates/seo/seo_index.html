@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}
+B2B SaaS SEO
+{% endblock %}
+
+{% block header %}
+		<h1 class="font-display uppercase text-[2.75rem] md:text-5xl lg:text-[3rem] xl:text-[4.75rem] font-heading max-w-4xl mx-auto text-center">
+			<span class="font-bold">B2B SaaS SEO</span>: Data Based Guide [{% now "Y" %}]
+		</h1>
+		<p>Learn how B2B SaaS companies in different niches get organic traffic.</p>
+{% endblock %}
+
+{% block content %}
+
+
+<section class="relative mx-auto space-y-4 md:px-20">
+<p>Growing your organic traffic is very likely to be the most consistent and stable way to grow your Annual Reccuring Revenue (ARR). The first step to increase your monthly traffic from search engines is:</p>
+<h2 class="text-2xl">Competitor Research</h2>
+<p>Competitor research in SEO is the process of identifying the brands that are targeting similar search queries to you. This may include media companies and affiliate marketers such as G2, and not only SaaS businesses.</p>
+<p>Here are some examples of competing software brands within different niches:</p>
+<div class="grid md: grid-cols-2 gap-6">
+{% for niche_bundle in niches_with_companies %}
+{% if niche_bundle.companies %}
+<div class="py-8 border rounded">
+<h3 class="text-2xl py-8 mx-auto text-center">{{ niche_bundle.niche.name }} SaaS Competitors</h2>
+<table class="table-auto mx-auto">
+	<thead class="border-b border-slate-500 text-left">
+	  <tr>
+	    <th class="p-4">Company</th>
+	    <th class="p-4">Traffic (US)</th>
+	    <th class="p-4">Pages</th>
+	  </tr>
+	</thead>
+	<tbody>
+	  {% for company in niche_bundle.companies %}
+	  {% if user.is_staff and company.is_lead %}
+	  <tr class="border-b border-indigo-100 bg-lime-200">
+	{% else %}
+	<tr class="border-b border-indigo-100">
+	{% endif %}
+		<td class="p-4"><a href="{% url 'company-detail' company.slug %}" rel="nofollow">{{company.name}}</a></td>
+		<td class="p-4">{% if company.domain_data_json %}
+		{{ company.domain_data_json.tasks.0.result.0.items.0.full_domain_metrics.organic.etv|floatformat:0|intcomma }}
+		{% endif %}
+		</td>
+		<td class="p-4">{% if company.domain_pages_data_json.tasks.0.result.0.total_count %}{{ company.domain_pages_data_json.tasks.0.result.0.total_count|intcomma }}{% else %}<span class="text-slate-300">Unknown</span>{% endif %}</td>
+	  </tr>
+	  {% endfor %}
+	</tbody>
+</table>
+</div>
+{% endif %}
+{% endfor %}
+</div>
+</section>
+
+
+{% endblock %}

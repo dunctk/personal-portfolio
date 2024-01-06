@@ -1,0 +1,114 @@
+{% extends "base.html" %}
+
+{% load humanize %}
+{% block title %}
+{{company.name}} SEO Strategy
+{% endblock %}
+
+{% block header %}
+<h1 class="font-display font-bold uppercase text-[2.75rem] md:text-7xl lg:text-[4rem] xl:text-[5.75rem] font-heading max-w-4xl mx-auto text-center">
+	{{company.name}} SEO Strategy
+</h1>
+<p><a class="" href="{{company.domain}}">{{company.domain}}</a> 
+	{% if request.user.is_staff %}
+	 | <a href="{{ company.get_admin_url }}">View in admin</a>
+	 | <a href="{% url 'company-detail-pitch' company.slug %}">Pitch</a>
+	{% endif %}</p>
+{% endblock %}
+
+{% block content %}
+
+{% block pitch_content %}
+{% endblock pitch_content %}
+
+
+
+<h2 class="text-2xl my-4">Current SEO</h2>
+
+<h3 class="text-xl mb-2 mt-8">Traffic</h3>
+<p>
+	{{ company.name }} gets approximately 
+	{{ company.domain_data_json.tasks.0.result.0.items.0.full_domain_metrics.organic.etv|floatformat:0|intcomma }} 
+	monthly organic clicks from Google from the US.
+</p>
+
+<h3 class="text-xl mb-2 mt-8">Top Pages</h3>
+<table class="table-auto">
+	<thead class="border-b border-slate-500 text-left">
+	  <tr>
+	    <th class="p-4">Page</th>
+	    <th class="p-4">Approx. Monthly Clicks (US)</th>
+	    <th class="p-4"></th>
+	  </tr>
+	</thead>
+	<tbody>
+	{% for page in company.domain_pages_data_json.tasks.0.result.0.items|slice:":10" %}
+	  <tr class="border-b border-indigo-100">
+		<td class="p-4">{{ page.page_address }}</td>
+		<td class="p-4">{{ page.metrics.organic.etv|floatformat:0|intcomma }}</td>
+		<td class="p-4"></td>
+	  </tr>
+	  {% endfor %}
+	</tbody>
+</table>
+
+<!--<h3 class="text-xl mb-2 mt-8">Keywords</h3>-->
+
+<h3 class="text-xl mb-2 mt-8">Main Topics</h3>
+
+<div style="width: 800px; height: 450px;" class="pt-4 bg-slate-800 rounded-2xl text-clip overflow-hidden p-8">
+{% for topic in homepage_entities.textrazor_json.response.topics|slice:":1" %}
+<div class="text-fuchsia-300">{{ topic.label }}</div>
+{% endfor %}
+{% for topic in homepage_entities.textrazor_json.response.topics|slice:"1:" %}
+<div class="text-slate-50">{{ topic.label }}</div>
+{% endfor %}
+</div>
+
+{% if competitors %}
+<h3 class="text-xl mb-2 mt-8">{{company.name}} Competitors</h3>
+<table class="table-auto">
+	<thead class="border-b border-slate-500 text-left">
+	  <tr>
+	    <th class="p-4">Competitor</th>
+	    <th class="p-4">Traffic</th>
+	    <th class="p-4">Indexed Pages</th>
+	  </tr>
+	</thead>
+	<tbody>
+	{% for competitor in competitors %}
+	{% if competitor.id == company.id %}
+	<tr class="border-b border-indigo-100 bg-lime-100">
+	{% else %}
+	  <tr class="border-b border-indigo-100">
+	{% endif %}
+		<td class="p-4"><a href="{% url 'company-detail' competitor.slug %}">{{ competitor.name }}</a></td>
+		<td class="p-4">{{ competitor.domain_data_json.tasks.0.result.0.items.0.full_domain_metrics.organic.etv|floatformat:0|intcomma }}</td>
+		<td class="p-4">{% if competitor.pages_in_serps %}{{ competitor.pages_in_serps }}{% else %}<span class="text-slate-300">unknown</span>{% endif %}</td>
+	  </tr>
+	  {% endfor %}
+	</tbody>
+</table>
+{% endif %}
+
+<h2 class="text-2xl mb-2 mt-8">How could {{company.name}} grow their ARR using SEO?</h2>
+
+<h3 class="text-xl mb-2 mt-8">The Process</h3>
+
+<p class="my-4">The steps for {{company.name}} to increase their organic traffic and revenue would be:</p>
+
+<ol class="list-decimal">
+	<li>Design the ideal Topical Map</li>
+	<li>Create content plan</li>
+	<li>Priotitize based on available resources</li>
+	<li>Produce content</li>
+	<li>Add internal links based on Topical Map</li>
+</ol>
+
+{% if user.is_staff %}
+<h3 class="text-xl mb-2 mt-8">Expanding the Topical Map</h3>
+
+<div style="width: 800px; height: 450px;" class="pt-4 bg-slate-800 rounded-2xl"></div>
+{% endif %}
+
+{% endblock %}

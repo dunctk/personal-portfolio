@@ -1,0 +1,52 @@
+{% load static tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>{% block title %}Duncan Trevithick{% endblock %}</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="icon" href="{% static 'logo_sm.jpg' %}" type="image/x-icon">
+		{% tailwind_css %}
+	</head>
+
+	<body class="bg-gray-50 font-sans leading-normal tracking-normal">
+		<nav class="w-full px-6 lg:px-10 py-4 lg:py-3 lg:block relative z-10 sticky top-0 bg-white border-b">
+		<div class="flex flex-row justify-between items-center max-w-screen-2xl mx-auto">
+			<a class="relative bg-black text-white rounded" href="/"><img src="/static/logo_sm.jpg" class="max-w-[72px] rounded" /></a>
+		<div>
+			<ul class="md:flex justify-center hidden items-center gap-x-8 list-none">
+				<li><a href="{% url 'seo-index' %}">B2B SaaS SEO</a></li>
+				<li><a href="{% url 'content-writing' %}">B2B SaaS Content Writer</a></li>
+				<li><a href="{% url 'portfolio-index' %}">Content Marketing Portfolio</a></li>
+				<li><a href="{% url 'code-index' %}">Code & Automation</a></li>
+				<!--<li><a href="{% url 'about' %}">About</a></li>-->
+				
+			</ul>
+		</div>
+			<div class="flex items-center gap-4">
+				<!--<a class="text-[15px] text-black py-2 px-2 lg:px-3 hover:bg-gray-200/50 rounded-md transition h-fit font-medium">Contact</a>-->
+				<a class="flex justify-center gap-[10px] text-white bg-indigo-500 border-[#3843D0] border-2 rounded-[10px] py-4 px-6 lg:py-3 lg:px-8 font-medium transition-colors hover:bg-[#060419] hover:text-white" href="mailto:duncan@duncanfelix.co.uk">
+					Contact
+				</a>
+			</div>
+		</div>
+		</nav>
+		<section class="relative bg-[#F7F5FF] bg-cover bg-no-repeat bg-center mx-auto overflow-y-hidden text-center">
+			<div class="flex flex-col gap-y-8 justify-center px-1 lg:p-16 xl:p-18">
+				{% block header %}
+				<h1 class="font-display font-bold uppercase text-[2.75rem] md:text-7xl lg:text-[4rem] xl:text-[5.75rem] font-heading max-w-4xl mx-auto text-center">
+					The Ladder Funnel Process
+				</h1>
+				<p class="text-2xl md:text-3xl text-center max-w-3xl mx-auto font-medium">Double Your Organic Traffic with <a class="bg-fuchsia-300" href="{% url 'seo-index'%}">SEO</a>.</p> 
+				<p class="text-2xl md:text-3xl text-center max-w-3xl mx-auto font-medium">+ Drop Your <em>Net Cost of Customer Acquisition</em> to Zero with a <a class="bg-fuchsia-300" href="">Ladder Funnel</a></p>
+				{% endblock %}
+			</div>
+		</section>
+
+		<div class="overflow-x-hidden container mx-auto p-8">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</body>
+</html>
