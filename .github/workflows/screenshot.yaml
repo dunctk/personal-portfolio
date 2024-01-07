@@ -41,11 +41,12 @@ jobs:
           
           # Define a folder path inside the bucket where screenshots will be stored
           FOLDER_PATH="portfolio" # Replace with your desired folder name
+          BUCKET_NAME="projectscreenshots"
 
           # Iterate over each screenshot and upload it to the specified folder in B2
           find ./screenshots/* -type f | while read file; do 
             b2 upload-file --noProgress --contentType "image/png" \
-            ${BACKBLAZE_BZ_BUCKET_ID} "$file" "$FOLDER_PATH/$(basename ${file})"
+            $BUCKET_NAME "$file" "$FOLDER_PATH/$(basename ${file})"
           done
 
      
