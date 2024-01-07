@@ -20,11 +20,12 @@ Duncan Trevithick Web Development
 	<div class="grid grid-cols-2 gap-6 mb-12">
 	{% for item in projects %}
 	
-		<div class="space-y-4 border rounded p-6">
+		<div class="space-y-4 border rounded p-6 bg-zinc-800 text-gray-50">
 			<h3 class="text-lg">{{ item.title }}</h3>
 			{% if item.description %}
 			<p>{{item.description}}</p>
 			{% endif %}
+			
 			{% if item.youtube_id %}
 			<div class="aspect-w-16 aspect-h-9">
 				<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/{{item.youtube_id}}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
@@ -37,7 +38,10 @@ Duncan Trevithick Web Development
 			<p class="bg-slate-200 p-2 rounded text-slate-500">Client: {{item.client.name}}</p>
 			{% endif %}
 			{% endif %}
-			<p><a href="{{item.live_url}}" target="_blank" rel="nofollow" class="border-b border-violet-300">Live</a> {% if item.github_url %}<a class="border-b border-violet-300" href="{{item.github_url}}">Github</a>{% endif %}</p>
+			<p><a href="{{item.live_url}}" target="_blank" rel="nofollow" class="border-b border-sky-200 text-sky-400">Live</a> {% if item.github_url %}<a class="border-b border-violet-200 text-violet-400" href="{{item.github_url}}">Github</a>{% endif %}</p>
+			{% if item.screenshot_url %}
+			<img class="" src="{{item.screenshot_url}}"/>
+			{% endif %}
 		</div>
 	
 	{% endfor %}
