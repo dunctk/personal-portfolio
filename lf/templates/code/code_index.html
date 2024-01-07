@@ -40,7 +40,7 @@ Duncan Trevithick Web Development
 			{% endif %}
 			<p><a href="{{item.live_url}}" target="_blank" rel="nofollow" class="border-b border-sky-200 text-sky-400">Live</a> {% if item.github_url %}<a class="border-b border-violet-200 text-violet-400" href="{{item.github_url}}">Github</a>{% endif %}</p>
 			{% if item.screenshot_url %}
-			<img class="" src="{{item.screenshot_url}}"/>
+			<a href="{{item.live_url}}"><img class="" src="{{item.screenshot_url}}"/></a>
 			{% endif %}
 		</div>
 	
