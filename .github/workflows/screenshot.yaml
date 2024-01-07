@@ -21,7 +21,7 @@ jobs:
       - name: screenshots-ci-action
         uses: flameddd/screenshots-ci-action@master
         with:
-          url: https://github.com
+          url: https://duncant.co.uk
           devices: iPhone 6,iPhone 6 landscape,Nexus 7,iPad Pro,Galaxy S III landscape,iPad Pro landscape
 
       # Install Backblaze B2 CLI tool (assuming Python is present)
