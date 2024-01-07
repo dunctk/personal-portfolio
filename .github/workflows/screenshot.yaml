@@ -40,7 +40,7 @@ jobs:
           b2 authorize-account "${BACKBLAZE_BZ_KEY_ID}" "${BACKBLAZE_BZ_APP_KEY}"
           
           # Define a folder path inside the bucket where screenshots will be stored
-          FOLDER_PATH="mushroom" # Replace with your desired folder name
+          FOLDER_PATH="portfolio" # Replace with your desired folder name
 
           # Iterate over each screenshot and upload it to the specified folder in B2
           find ./screenshots/* -type f | while read file; do 
