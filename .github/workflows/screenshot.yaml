@@ -45,7 +45,7 @@ jobs:
           # Iterate over each screenshot and upload it to the specified folder in B2
           find ./screenshots/* -type f | while read file; do 
             b2 upload-file --noProgress --contentType "image/png" \
-            "${BACKBLAZE_BZ_BUCKET_ID}" "$file" "$FOLDER_PATH/$(basename ${file})"
+            ${BACKBLAZE_BZ_BUCKET_ID} "$file" "$FOLDER_PATH/$(basename ${file})"
           done
 
      
