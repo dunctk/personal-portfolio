@@ -17,7 +17,7 @@ Duncan Trevithick Web Development
 <section class="relative mx-auto space-y-8">
 	
 	
-	<div class="grid grid-cols-2 gap-6 mb-12">
+	<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
 	{% for item in projects %}
 	
 		<div class="space-y-4 border rounded p-6 bg-zinc-800 text-gray-50">
@@ -40,7 +40,7 @@ Duncan Trevithick Web Development
 			{% endif %}
 			<p><a href="{{item.live_url}}" target="_blank" rel="nofollow" class="border-b border-sky-200 text-sky-400">Live</a> {% if item.github_url %}<a class="border-b border-violet-200 text-violet-400" href="{{item.github_url}}">Github</a>{% endif %}</p>
 			{% if item.screenshot_url %}
-			<a href="{{item.live_url}}"><img class="" src="{{item.screenshot_url}}"/></a>
+			<a href="{{item.live_url}}"><img class="mt-4" src="{{item.screenshot_url}}"/></a>
 			{% endif %}
 		</div>
 	
