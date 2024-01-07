@@ -37,7 +37,7 @@ Duncan Trevithick Web Development
 			<p class="bg-slate-200 p-2 rounded text-slate-500">Client: {{item.client.name}}</p>
 			{% endif %}
 			{% endif %}
-			<p><a href="{{item.live_url}}" target="_blank" rel="nofollow" class="border-b border-violet-300">Live</a></p>
+			<p><a href="{{item.live_url}}" target="_blank" rel="nofollow" class="border-b border-violet-300">Live</a> {% if item.github_url %}<a class="border-b border-violet-300" href="{{item.github_url}}">Github</a>{% endif %}</p>
 		</div>
 	
 	{% endfor %}
