@@ -11,6 +11,18 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    # Install git-lfs
+    - name: Set up Git LFS
+      run: |
+        sudo apt-get update
+        sudo apt-get install git-lfs
+  
+    # Pull LFS files after checkout
+    - name: Pull LFS files
+      run: |
+        git lfs install --skip-smudge  # Skip automatic download during checkout.
+        git lfs pull                   # Explicitly pull down the large files.
+
     - name: Set up Python
       uses: actions/setup-python@v3
       with:
