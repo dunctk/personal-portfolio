@@ -1,7 +1,7 @@
 name: screenshots ci actions
 on:
-    push:
-      branches: [ main ]  
+  push:
+    branches: [ main ]
 
 jobs:
   screenshots:
@@ -9,22 +9,43 @@ jobs:
 
     steps:
 
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: install puppeteer-headful
-      uses: mujo-code/puppeteer-headful@master # Required for headful puppeteer
-      with:
-        args: ''
-      env:
-        CI: 'true'
+      - name: install puppeteer-headful
+        uses: mujo-code/puppeteer-headful@master # Required for headful puppeteer
+        with:
+          args: ''
+        env:
+          CI: 'true'
 
-    - name: screenshots-ci-action
-      uses: flameddd/screenshots-ci-action@master
-      with:
-        url: https://duncant.co.uk
-        devices: iPhone 6,iPhone 6 landscape,Nexus 7,Pad Pro,Galaxy S III landscape,iPad Pro landscape
+      - name: screenshots-ci-action
+        uses: flameddd/screenshots-ci-action@master
+        with:
+          url: https://github.com
+          devices: iPhone 6,iPhone 6 landscape,Nexus 7,iPad Pro,Galaxy S III landscape,iPad Pro landscape
 
-    - uses: actions/upload-artifact@v2 # Uplaod screenshots to Actions Artifacts via actions/upload-artifact@v2
-      with:
-        path: screenshots
-        name: Download-screenshots
+      # Install Backblaze B2 CLI tool (assuming Python is present)
+      - name : Install b2 CLI tool 
+        run : |
+           pip install b2
+      
+      # Authenticate and Upload Files To Backblaze B2 Bucket 
+      # Authenticate and Upload Files To Backblaze B2 Bucket 
+      - name: Upload Screenshots To BackBlaze B2 Bucket
+        env:
+          BACKBLAZE_BZ_BUCKET_ID: ${{ secrets.BACKBLAZE_BZ_BUCKET_ID }}
+          BACKBLAZE_BZ_KEY_ID: ${{ secrets.BACKBLAZE_BZ_KEY_ID }}
+          BACKBLAZE_BZ_APP_KEY: ${{ secrets.BACKBLAZE_BZ_APP_KEY }}
+        run: |
+          b2 authorize-account "${BACKBLAZE_BZ_KEY_ID}" "${BACKBLAZE_BZ_APP_KEY}"
+          
+          # Define a folder path inside the bucket where screenshots will be stored
+          FOLDER_PATH="mushroom" # Replace with your desired folder name
+
+          # Iterate over each screenshot and upload it to the specified folder in B2
+          find ./screenshots/* -type f | while read file; do 
+            b2 upload-file --noProgress --contentType "image/png" \
+            "${BACKBLAZE_BZ_BUCKET_ID}" "$file" "$FOLDER_PATH/$(basename ${file})"
+          done
+
+     
