@@ -37,7 +37,7 @@ jobs:
           BACKBLAZE_BZ_KEY_ID: ${{ secrets.BACKBLAZE_BZ_KEY_ID }}
           BACKBLAZE_BZ_APP_KEY: ${{ secrets.BACKBLAZE_BZ_APP_KEY }}
         run: |
-          b2 authorize-account "${BACKBLAZE_BZ_KEY_ID}" "${BACKBLAZE_BZ_APP_KEY}"
+          b2 authorize-account ${BACKBLAZE_BZ_KEY_ID} ${BACKBLAZE_BZ_APP_KEY}
           
           # Define a folder path inside the bucket where screenshots will be stored
           FOLDER_PATH="portfolio" # Replace with your desired folder name
